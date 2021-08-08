@@ -178,6 +178,11 @@
                 for (let j = 0; j < siblingMeshes.length; j++) {
                   if (siblingMeshes[j].name === "bottom") {
                     siblingMeshes[j].material = waterMaterialTop;
+                    BABYLON.SceneLoader.ImportMeshAsync(
+                      ["scene", "semi_house"],
+                      "https://assets.babylonjs.com/meshes/",
+                      "both_houses_scene.babylon"
+                    );
                   }
                 }
 
@@ -252,6 +257,21 @@
         panel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
         advancedTexture.addControl(panel);
 
+        let cityButton = BABYLON.GUI.Button.CreateImageButton(
+          "cityButton",
+          "City",
+          "https://lh3.googleusercontent.com/proxy/7xKGC6ktPOCATo9jfWjKv54w50xrIbzE3c-sNbq7MBj3Bv4pYPgkoECYLf6TcQi9xld9-7D2xp1o-SfFcc5TmZqhxq16IRVepL3Khw-VEUhWV06_vyZVZhbkLprRwCjgVLl8"
+        );
+        cityButton.width = "115px";
+        cityButton.height = "40px";
+        cityButton.color = "white";
+        cityButton.cornerRadius = 3;
+        cityButton.background = "#4c4034";
+        cityButton.onPointerUpObservable.add(function () {
+          console.log("city");
+          selectSwitch(tiles.desert);
+        });
+
         let desertTileButton = BABYLON.GUI.Button.CreateImageButton(
           "desertTileButton",
           "Desert",
@@ -260,11 +280,10 @@
         desertTileButton.width = "115px";
         desertTileButton.height = "40px";
         desertTileButton.color = "white";
-        desertTileButton.cornerRadius = 10;
-        desertTileButton.background = "Blue";
+        desertTileButton.cornerRadius = 3;
+        desertTileButton.background = "#4c4034";
         desertTileButton.onPointerUpObservable.add(function () {
           console.log("desert");
-
           selectSwitch(tiles.desert);
         });
 
@@ -276,8 +295,8 @@
         grassLandTileButton.width = "115px";
         grassLandTileButton.height = "40px";
         grassLandTileButton.color = "white";
-        grassLandTileButton.cornerRadius = 10;
-        grassLandTileButton.background = "Blue";
+        grassLandTileButton.cornerRadius = 3;
+        grassLandTileButton.background = "#4c4034";
         grassLandTileButton.onPointerUpObservable.add(function () {
           console.log("grassland");
           //   selector = tiles.desert;
@@ -293,8 +312,8 @@
         waterTileButton.width = "115px";
         waterTileButton.height = "40px";
         waterTileButton.color = "white";
-        waterTileButton.cornerRadius = 10;
-        waterTileButton.background = "Blue";
+        waterTileButton.cornerRadius = 3;
+        waterTileButton.background = "#4c4034";
         waterTileButton.onPointerUpObservable.add(function () {
           console.log("water");
           //   selector = tiles.desert;
@@ -309,8 +328,8 @@
         guiButton.width = "300px";
         guiButton.height = "40px";
         guiButton.color = "white";
-        guiButton.cornerRadius = 10;
-        guiButton.background = "blue";
+        guiButton.cornerRadius = 3;
+        guiButton.background = "#4c4034";
         guiButton.onPointerUpObservable.add(function () {
           let sceneMeshes = scene.meshes.slice(0);
           for (let mesh of sceneMeshes) {
@@ -346,6 +365,7 @@
         });
         panel.addControl(slider);
         panel.addControl(guiButton);
+        panel.addControl(cityButton);
         panel.addControl(desertTileButton);
         panel.addControl(grassLandTileButton);
         panel.addControl(waterTileButton);
