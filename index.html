@@ -178,10 +178,12 @@
                 for (let j = 0; j < siblingMeshes.length; j++) {
                   if (siblingMeshes[j].name === "bottom") {
                     siblingMeshes[j].material = waterMaterialTop;
-                    BABYLON.SceneLoader.ImportMeshAsync(
-                      ["scene", "semi_house"],
-                      "https://assets.babylonjs.com/meshes/",
-                      "both_houses_scene.babylon"
+
+                    BABYLON.SceneLoader.ImportMesh(
+                      "",
+                      "https://raw.githubusercontent.com/BabylonJS/MeshesLibrary/master/",
+                      "PBR_Spheres.glb",
+                      scene
                     );
                   }
                 }
@@ -269,7 +271,7 @@
         cityButton.background = "#4c4034";
         cityButton.onPointerUpObservable.add(function () {
           console.log("city");
-          selectSwitch(tiles.desert);
+          //   selectSwitch(tiles.desert);
         });
 
         let desertTileButton = BABYLON.GUI.Button.CreateImageButton(
@@ -408,6 +410,11 @@
             for (let j = 0; j < hexTileChildMeshes.length; j++) {
               if (hexTileChildMeshes[j].name === "top") {
                 hexTileChildMeshes[j].material = waterMaterialTop;
+                // BABYLON.SceneLoader.ImportMeshAsync(
+                //   ["scene", "semi_house"],
+                //   "https://assets.babylonjs.com/meshes/",
+                //   "both_houses_scene.babylon"
+                // );
                 hexTileChildMeshes[j].hasVertexAlpha = false;
               }
             }
