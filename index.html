@@ -180,11 +180,11 @@
                 for (let j = 0; j < siblingMeshes.length; j++) {
                   if (siblingMeshes[j].name === "bottom") {
                     siblingMeshes[j].material = waterMaterialTop;
-                    BABYLON.SceneLoader.ImportMesh(
-                      "",
-                      "https://dl.dropbox.com/s/u2imtbut2v1tlim/",
-                      "scene.gltf",
-                      scene
+
+                    BABYLON.SceneLoader.ImportMeshAsync(
+                      "semi_house",
+                      "https://assets.babylonjs.com/meshes/",
+                      "both_houses_scene.babylon"
                     );
                   }
                 }
