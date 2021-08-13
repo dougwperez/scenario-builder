@@ -19,6 +19,8 @@
     <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
     <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
     <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+    <script src="babylon.js"></script>
+    <script src="babylon.glTFFileLoader.js"></script>
 
     <style>
       html,
@@ -180,7 +182,8 @@
                     siblingMeshes[j].material = waterMaterialTop;
                     BABYLON.SceneLoader.ImportMesh(
                       "",
-                      "https://raw.githubusercontent.com/dougwperez/scenario-builder/main/city%20(1)/scene.gltf",
+                      "https://dl.dropbox.com/s/u2imtbut2v1tlim/",
+                      "scene.gltf",
                       scene
                     );
                   }
@@ -189,8 +192,12 @@
                 animGroups[i].play();
               }
             }
+            // https://dlropbox.com/s/u2imtbut2v1tlim/scene.gltf
+            // https://github.com/
+            // https://cdn.jsdelivr.net/gh/dougwperez/scenario-builder@b3d441b331bcfc687062ca009021fadf0f69c3c4
 
-            // https://raw.githubusercontent.com/dougwperez/scenario-builder/main/city%20(1)/scene.gltf
+            // b3d441b
+            // // https://raw.githubusercontent.com/dougwperez/scenario-builder/main/city%20(1)/scene.gltf
 
             let noiseTexture = flatNoiseTexture;
 
