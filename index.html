@@ -178,11 +178,9 @@
                 for (let j = 0; j < siblingMeshes.length; j++) {
                   if (siblingMeshes[j].name === "bottom") {
                     siblingMeshes[j].material = waterMaterialTop;
-
                     BABYLON.SceneLoader.ImportMesh(
                       "",
-                      "https://raw.githubusercontent.com/BabylonJS/MeshesLibrary/master/",
-                      "PBR_Spheres.glb",
+                      "https://raw.githubusercontent.com/dougwperez/scenario-builder/main/city%20(1)/scene.gltf",
                       scene
                     );
                   }
@@ -191,6 +189,8 @@
                 animGroups[i].play();
               }
             }
+
+            // https://raw.githubusercontent.com/dougwperez/scenario-builder/main/city%20(1)/scene.gltf
 
             let noiseTexture = flatNoiseTexture;
 
