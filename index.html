@@ -81,11 +81,19 @@
 
         //2d tiles
         tiles = {
+          rubble:
+            "https://www.textures.com/system/gallery/photos/Concrete/Stone%20Debris/38534/DebrisStone0026_1_download600.jpg",
+          farm: "https://www.textures.com/system/gallery/photos/Nature/Farmland%20Aerials/50401/Farmland0008_1_download600.jpg",
+          destroyedRoad:
+            "https://www.textures.com/system/gallery/photos/Roads/Dirt%20Roads/28381/RoadsDirt0004_1_download600.jpg",
+          road: "https://i.pinimg.com/474x/83/9c/04/839c0417d8792b3d2eda93a5ad67ab9b.jpg",
+          // https://i.pinimg.com/564x/68/7b/72/687b726d18ac59e4243a8cd3c0833bba.jpg
           desert: "https://www.babylonjs-playground.com/textures/ground.jpg",
           grassLand:
             "https://assets.babylonjs.com/environments/valleygrass.png",
           water: "https://www.babylonjs-playground.com/textures/waterbump.png",
-          forrest: "https://www.babylonjs-playground.com/textures/tree.png",
+          forrest:
+            "https://i.pinimg.com/474x/83/9c/04/839c0417d8792b3d2eda93a5ad67ab9b.jpg",
         };
 
         // Default intensity is 1. Let's dim the light a small amount
@@ -266,19 +274,64 @@
         panel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
         advancedTexture.addControl(panel);
 
-        let cityButton = BABYLON.GUI.Button.CreateImageButton(
-          "cityButton",
-          "City",
-          "https://lh3.googleusercontent.com/proxy/7xKGC6ktPOCATo9jfWjKv54w50xrIbzE3c-sNbq7MBj3Bv4pYPgkoECYLf6TcQi9xld9-7D2xp1o-SfFcc5TmZqhxq16IRVepL3Khw-VEUhWV06_vyZVZhbkLprRwCjgVLl8"
+        let roadTileButton = BABYLON.GUI.Button.CreateImageButton(
+          "roadTileButton",
+          "Road",
+          "https://i.pinimg.com/564x/68/7b/72/687b726d18ac59e4243a8cd3c0833bba.jpg"
         );
-        cityButton.width = "115px";
-        cityButton.height = "40px";
-        cityButton.color = "white";
-        cityButton.cornerRadius = 3;
-        cityButton.background = "#4c4034";
-        cityButton.onPointerUpObservable.add(function () {
-          console.log("city");
-          //   selectSwitch(tiles.desert);
+        roadTileButton.width = "115px";
+        roadTileButton.height = "40px";
+        roadTileButton.color = "white";
+        roadTileButton.cornerRadius = 3;
+        roadTileButton.background = "#4c4034";
+        roadTileButton.onPointerUpObservable.add(function () {
+          console.log("road");
+          selectSwitch(tiles.road);
+        });
+
+        let destroyedRoadTileButton = BABYLON.GUI.Button.CreateImageButton(
+          "destroyedRoadTileButton",
+          "Destroyed Road",
+          "https://www.textures.com/system/gallery/photos/Roads/Dirt%20Roads/28381/RoadsDirt0004_1_download600.jpg"
+        );
+        destroyedRoadTileButton.width = "115px";
+        destroyedRoadTileButton.height = "40px";
+        destroyedRoadTileButton.color = "white";
+        destroyedRoadTileButton.cornerRadius = 3;
+        destroyedRoadTileButton.background = "#4c4034";
+        destroyedRoadTileButton.onPointerUpObservable.add(function () {
+          console.log("destroyedroad");
+          selectSwitch(tiles.destroyedRoad);
+        });
+
+        let rubbleTileButton = BABYLON.GUI.Button.CreateImageButton(
+          "rubbleTileButton",
+          "Rubble",
+          "https://i.pinimg.com/564x/68/7b/72/687b726d18ac59e4243a8cd3c0833bba.jpg"
+        );
+        rubbleTileButton.width = "115px";
+        rubbleTileButton.height = "40px";
+        rubbleTileButton.color = "white";
+        rubbleTileButton.cornerRadius = 3;
+        rubbleTileButton.background = "#4c4034";
+        rubbleTileButton.onPointerUpObservable.add(function () {
+          console.log("rubble");
+          selectSwitch(tiles.rubble);
+        });
+
+        let farmTileButton = BABYLON.GUI.Button.CreateImageButton(
+          "farmTileButton",
+          "Farm",
+          "https://www.textures.com/system/gallery/photos/Nature/Farmland%20Aerials/50401/Farmland0008_1_download600.jpg"
+        );
+        farmTileButton.width = "115px";
+        farmTileButton.height = "40px";
+        farmTileButton.color = "white";
+        farmTileButton.cornerRadius = 3;
+        farmTileButton.background = "#4c4034";
+        farmTileButton.onPointerUpObservable.add(function () {
+          console.log("farm");
+          selectSwitch(tiles.farm);
         });
 
         let desertTileButton = BABYLON.GUI.Button.CreateImageButton(
@@ -330,6 +383,21 @@
           selectSwitch(tiles.water);
         });
 
+        let cityButton = BABYLON.GUI.Button.CreateImageButton(
+          "cityButton",
+          "City",
+          "https://lh3.googleusercontent.com/proxy/7xKGC6ktPOCATo9jfWjKv54w50xrIbzE3c-sNbq7MBj3Bv4pYPgkoECYLf6TcQi9xld9-7D2xp1o-SfFcc5TmZqhxq16IRVepL3Khw-VEUhWV06_vyZVZhbkLprRwCjgVLl8"
+        );
+        cityButton.width = "115px";
+        cityButton.height = "40px";
+        cityButton.color = "white";
+        cityButton.cornerRadius = 3;
+        cityButton.background = "#4c4034";
+        cityButton.onPointerUpObservable.add(function () {
+          console.log("city");
+          //   selectSwitch(tiles.desert);
+        });
+
         let guiButton = BABYLON.GUI.Button.CreateSimpleButton(
           "guiButton",
           "Rebuild Hex Grid: Size 2"
@@ -378,6 +446,10 @@
         panel.addControl(desertTileButton);
         panel.addControl(grassLandTileButton);
         panel.addControl(waterTileButton);
+        panel.addControl(roadTileButton);
+        panel.addControl(destroyedRoadTileButton);
+        panel.addControl(farmTileButton);
+        panel.addControl(rubbleTileButton);
 
         return scene;
       };
