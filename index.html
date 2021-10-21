@@ -174,9 +174,15 @@
         );
         flatNoiseTexture.name = "flatNoiseTexture";
 
+        console.log("Koca: ");
         //handling of hex tile picking
         scene.onPointerDown = function (evt, pickResult) {
           if (pickResult.pickedMesh) {
+            console.log(
+              "Koca: pickResult.pickedMesh ",
+              pickResult.pickedMesh.absolutePosition
+            );
+
             let animGroups = scene.animationGroups;
             for (let i = 0; i < animGroups.length; i++) {
               if (
@@ -188,6 +194,30 @@
                 for (let j = 0; j < siblingMeshes.length; j++) {
                   if (siblingMeshes[j].name === "bottom") {
                     siblingMeshes[j].material = waterMaterialTop;
+
+                    // const test = BABYLON.SceneLoader.ImportMesh(
+                    //   "semi_house",
+                    //   "https://assets.babylonjs.com/meshes/",
+                    //   "both_houses_scene.babylon",
+                    //   scene,
+                    //   function (newMeshes) {
+                    //     // Set the target of the camera to the first imported mesh
+                    //     //camera.target = newMeshes[0];
+                    //     const b = newMeshes[0];
+                    //     b.absolutePosition.x =
+                    //       pickResult.pickedMesh.absolutePosition._x;
+                    //   }
+                    //   return scene
+                    // );
+
+                    const box = BABYLON.MeshBuilder.CreateBox("box", {
+                      height: 1,
+                      width: 1,
+                      depth: 1,
+                    });
+                    box.position.x = pickResult.pickedMesh.absolutePosition._x;
+                    box.position.z = pickResult.pickedMesh.absolutePosition._z;
+                    box.position.y = 0.5;
 
                     BABYLON.SceneLoader.ImportMeshAsync(
                       "semi_house",
