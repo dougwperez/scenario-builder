@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <title>Babylon.js sample code</title>
@@ -37,10 +38,57 @@
         height: 100%;
         touch-action: none;
       }
+      .menuButtons {
+        position: absolute;
+        /* top: 80px; */
+        bottom: 200px;
+        left: 0;
+        width: 30%;
+        height: 30px;
+        border: 3px solid #73ad21;
+        background-color: antiquewhite;
+      }
+      .menuBtn {
+        width: 15%;
+        background-color: lightcyan;
+        font-weight: 800;
+      }
+      .stickyFooter {
+        position: absolute;
+        /* top: 80px; */
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 200px;
+        border: 3px solid #73ad21;
+        background-color: antiquewhite;
+      }
+      .itemButtons {
+        background-color: rgb(253, 255, 224);
+        font-weight: 800;
+      }
+      #desertButton {
+        width: 5%;
+        font-weight: 800;
+        /* color: pink; */
+      }
     </style>
   </head>
   <body>
     <canvas id="renderCanvas"></canvas>
+    <div class="menuButtons" id="builderMenuButtons">
+      <button class="menuBtn">Terrain</button
+      ><button class="menuBtn">Civilian</button>
+      <button class="menuBtn">NATO</button>
+      <button class="menuBtn">USSR</button>
+      <button class="menuBtn">Options</button>
+      <button class="menuBtn" id="hideShowBuilder">Hide/Show</button>
+    </div>
+    <div class="stickyFooter" id="builderMenu">
+      <button id="desertButton" class="itemButtons">Desert</button>
+      <button id="grassLandButton" class="itemButtons">GrassLand</button>
+      <button id="waterButton" class="itemButtons">Water</button>
+    </div>
     <script>
       var canvas = document.getElementById("renderCanvas");
 
@@ -117,7 +165,20 @@
         let textureUrl;
         let waterMaterialTop;
 
-        const selectSwitch = (tile) => {
+        // const selectSwitch = (tile) => {
+        //   console.log("tile in switch", tile);
+        //   textureUrl = tile;
+        //   selector = tile;
+
+        //   var select = waterMaterialTop;
+
+        //   console.log("fuck", selector);
+        //   waterMaterialTop = new BABYLON.StandardMaterial("largeGroundMat");
+        //   waterMaterialTop.diffuseTexture = new BABYLON.Texture(textureUrl);
+        // };
+        console.log("selectSwitch", selectSwitch);
+
+        function selectSwitch(tile) {
           console.log("tile in switch", tile);
           textureUrl = tile;
           selector = tile;
@@ -127,6 +188,38 @@
           console.log("fuck", selector);
           waterMaterialTop = new BABYLON.StandardMaterial("largeGroundMat");
           waterMaterialTop.diffuseTexture = new BABYLON.Texture(textureUrl);
+        }
+        document.getElementById("desertButton").onclick = function () {
+          selectSwitch(tiles.desert);
+        };
+        document.getElementById("grassLandButton").onclick = function () {
+          selectSwitch(tiles.grassLand);
+        };
+        document.getElementById("waterButton").onclick = function () {
+          selectSwitch(tiles.water);
+        };
+
+        document.getElementById("hideShowBuilder").onclick = function () {
+          const buildMenuHeight =
+            document.getElementById("builderMenu").style.height;
+          const buildMenuButtonsHeight =
+            document.getElementById("builderMenuButtons").style.height;
+          console.log("buildMenuButtonsHeight", buildMenuButtonsHeight);
+          if (buildMenuHeight === "1px") {
+            document
+              .getElementById("builderMenuButtons")
+              .setAttribute("style", "bottom:200px");
+            document
+              .getElementById("builderMenu")
+              .setAttribute("style", "height:200px");
+          } else {
+            document
+              .getElementById("builderMenuButtons")
+              .setAttribute("style", "bottom:1px");
+            document
+              .getElementById("builderMenu")
+              .setAttribute("style", "height:1px");
+          }
         };
 
         createHexGrid(
