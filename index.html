@@ -28,12 +28,13 @@
   <body>
     <canvas id="renderCanvas"></canvas>
     <div class="menuButtons" id="builderMenuButtons">
-      <button class="menuBtn">Terrain</button
-      ><button class="menuBtn">Civilian</button>
-      <button class="menuBtn">NATO</button>
-      <button class="menuBtn">USSR</button>
-      <button class="menuBtn">Options</button>
-      <button class="menuBtn" id="hideShowBuilder">Hide/Show</button>
+      <button class="menuBtn">📍 Objectives</button>
+      <button class="menuBtn">🌲 Terrain</button>
+      <button class="menuBtn">🏢 Civilian</button>
+      <button class="menuBtn">🟦 NATO</button>
+      <button class="menuBtn">🟥 USSR</button>
+      <button class="menuBtn">⚙️ Options</button>
+      <button class="menuBtn" id="hideShowBuilder">⬇️ Hide Menu</button>
     </div>
     <div class="stickyFooter" id="builderMenu">
       <button id="desertButton" class="itemButtons">Desert</button>
@@ -56,6 +57,8 @@
       var createScene = async function () {
         // This creates a basic Babylon Scene object (non-mesh)
         var scene = new BABYLON.Scene(engine);
+        // scene.clearColor = new BABYLON.Color3(0.94, 1.0, 0.98);
+
         var selector;
         var camera = new BABYLON.ArcRotateCamera(
           "camera",
@@ -155,18 +158,24 @@
             document.getElementById("builderMenu").style.height;
           const buildMenuButtonsHeight =
             document.getElementById("builderMenuButtons").style.height;
-          console.log("buildMenuButtonsHeight", buildMenuButtonsHeight);
+          let HideShowButtonText =
+            document.getElementById("hideShowBuilder").innerHTML;
+          console.log("HideShowButtonText", HideShowButtonText);
           if (buildMenuHeight === "1px") {
+            document.getElementById("hideShowBuilder").innerHTML =
+              "⬇️ Hide Menu ";
             document
               .getElementById("builderMenuButtons")
-              .setAttribute("style", "bottom:200px");
+              .setAttribute("style", "bottom:210px");
             document
               .getElementById("builderMenu")
               .setAttribute("style", "height:200px");
           } else {
+            document.getElementById("hideShowBuilder").innerHTML =
+              "⬆️ Show Menu";
             document
               .getElementById("builderMenuButtons")
-              .setAttribute("style", "bottom:1px");
+              .setAttribute("style", "bottom:11px");
             document
               .getElementById("builderMenu")
               .setAttribute("style", "height:1px");
