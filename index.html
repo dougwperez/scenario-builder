@@ -29,23 +29,27 @@
     <canvas id="renderCanvas"></canvas>
     <div class="menuButtons" id="builderMenuButtons">
       <button class="menuBtn">📍 Objectives</button>
-      <button class="menuBtn">🌲 Terrain</button>
-      <button class="menuBtn">🏢 Civilian</button>
+      <button class="menuBtn" id="terrain">🌲 Terrain</button>
+      <button class="menuBtn" id="civilian">🏢 Civilian</button>
       <button class="menuBtn">🟦 NATO</button>
       <button class="menuBtn">🟥 USSR</button>
       <button class="menuBtn">⚙️ Options</button>
       <button class="menuBtn" id="hideShowBuilder">⬇️ Hide Menu</button>
     </div>
     <div class="stickyFooter" id="builderMenu">
-      <button id="desertButton" class="itemButtons">Desert</button>
-      <button id="grassLandButton" class="itemButtons">GrassLand</button>
-      <button id="waterButton" class="itemButtons">Water</button>
-      <button id="roadButton" class="itemButtons">Road</button>
-      <button id="streetButton" class="itemButtons">Street</button>
-      <button id="destroyedRoadButton" class="itemButtons">
-        Destroyed Road
-      </button>
-      <button id="rubbleButton" class="itemButtons">Rubble</button>
+      <div id="terrainItems">
+        <button id="desertButton" class="itemButtons">Desert</button>
+        <button id="grassLandButton" class="itemButtons">GrassLand</button>
+        <button id="waterButton" class="itemButtons">Water</button>
+      </div>
+      <div id="civilianItems">
+        <button id="roadButton" class="itemButtons">Road</button>
+        <button id="streetButton" class="itemButtons">Street</button>
+        <button id="destroyedRoadButton" class="itemButtons">
+          Destroyed Road
+        </button>
+        <button id="rubbleButton" class="itemButtons">Rubble</button>
+      </div>
     </div>
     <script>
       var canvas = document.getElementById("renderCanvas");
@@ -169,6 +173,18 @@
         };
         document.getElementById("rubbleButton").onclick = function () {
           selectSwitch(tiles.rubble);
+        };
+
+        document.getElementById("terrain").onclick = function () {
+          document.getElementById("civilianItems").style.display = "none";
+          document.getElementById("terrainItems").style.display = "block";
+          console.log("click terrain");
+        };
+
+        document.getElementById("civilian").onclick = function () {
+          document.getElementById("civilianItems").style.display = "block";
+          document.getElementById("terrainItems").style.display = "none";
+          console.log("click terrain");
         };
 
         document.getElementById("hideShowBuilder").onclick = function () {
