@@ -49,6 +49,8 @@
           Destroyed Road
         </button>
         <button id="rubbleButton" class="itemButtons">Rubble</button>
+        <button id="farmButton" class="itemButtons">Farm</button>
+        <button id="boxButton" class="itemButtons">Box</button>
       </div>
     </div>
     <script>
@@ -57,6 +59,11 @@
       var engine = null;
       var scene = null;
       var sceneToRender = null;
+      var assetSelector = "Nuthin";
+      var currentTile = "";
+      const clearAssetSelector = () => {
+        assetSelector = "Nothing";
+      };
       var createDefaultEngine = function () {
         return new BABYLON.Engine(canvas, true, {
           preserveDrawingBuffer: true,
@@ -94,15 +101,13 @@
         //2d tiles
         tiles = {
           rubble: "./textures/rubble.jpeg",
-          farm: "https://www.textures.com/system/gallery/photos/Nature/Farmland%20Aerials/50401/Farmland0008_1_download600.jpg",
+          farm: "./textures/farm.jpeg",
           destroyedRoad: "./textures/destroyedRoad.jpeg",
           road: "./textures/road.jpeg",
-          // https://i.pinimg.com/564x/68/7b/72/687b726d18ac59e4243a8cd3c0833bba.jpg
           desert: "./textures/ground.jpg",
-          grassLand:
-            "https://assets.babylonjs.com/environments/valleygrass.png",
-          water: "https://www.babylonjs-playground.com/textures/waterbump.png",
-          forrest:
+          grassLand: "./textures/grassLand.png",
+          water: "./textures/water.png",
+          altRoad:
             "https://i.pinimg.com/474x/83/9c/04/839c0417d8792b3d2eda93a5ad67ab9b.jpg",
           street: "./textures/road2.jpeg",
         };
@@ -148,31 +153,48 @@
           selector = tile;
 
           var select = waterMaterialTop;
+          currentTile = tile;
+          console.log("Koca: currentTile ", currentTile);
 
           console.log("fuck", selector);
           waterMaterialTop = new BABYLON.StandardMaterial("largeGroundMat");
           waterMaterialTop.diffuseTexture = new BABYLON.Texture(textureUrl);
         }
         document.getElementById("desertButton").onclick = function () {
+          clearAssetSelector();
           selectSwitch(tiles.desert);
         };
         document.getElementById("grassLandButton").onclick = function () {
+          clearAssetSelector();
           selectSwitch(tiles.grassLand);
         };
         document.getElementById("waterButton").onclick = function () {
+          clearAssetSelector();
           selectSwitch(tiles.water);
         };
         document.getElementById("roadButton").onclick = function () {
+          clearAssetSelector();
           selectSwitch(tiles.road);
         };
         document.getElementById("streetButton").onclick = function () {
+          clearAssetSelector();
           selectSwitch(tiles.street);
         };
         document.getElementById("destroyedRoadButton").onclick = function () {
+          clearAssetSelector();
           selectSwitch(tiles.destroyedRoad);
         };
         document.getElementById("rubbleButton").onclick = function () {
+          clearAssetSelector();
           selectSwitch(tiles.rubble);
+        };
+        document.getElementById("farmButton").onclick = function () {
+          clearAssetSelector();
+          selectSwitch(tiles.farm);
+        };
+        document.getElementById("boxButton").onclick = function () {
+          selectSwitch(currentTile);
+          assetSelector = "box";
         };
 
         document.getElementById("terrain").onclick = function () {
@@ -285,33 +307,31 @@
                     //   }
                     //   return scene
                     // );
+                    console.log("Koca: assetSelector ", assetSelector);
+                    if (assetSelector === "box") {
+                      const box = BABYLON.MeshBuilder.CreateBox("box", {
+                        height: 1,
+                        width: 1,
+                        depth: 1,
+                      });
+                      box.position.x =
+                        pickResult.pickedMesh.absolutePosition._x;
+                      box.position.z =
+                        pickResult.pickedMesh.absolutePosition._z;
+                      box.position.y = 0.5;
+                    }
 
-                    const box = BABYLON.MeshBuilder.CreateBox("box", {
-                      height: 1,
-                      width: 1,
-                      depth: 1,
-                    });
-                    box.position.x = pickResult.pickedMesh.absolutePosition._x;
-                    box.position.z = pickResult.pickedMesh.absolutePosition._z;
-                    box.position.y = 0.5;
-
-                    BABYLON.SceneLoader.ImportMeshAsync(
-                      "semi_house",
-                      "https://assets.babylonjs.com/meshes/",
-                      "both_houses_scene.babylon"
-                    );
+                    // BABYLON.SceneLoader.ImportMeshAsync(
+                    //   "semi_house",
+                    //   "https://assets.babylonjs.com/meshes/",
+                    //   "both_houses_scene.babylon"
+                    // );
                   }
                 }
 
                 animGroups[i].play();
               }
             }
-            // https://dlropbox.com/s/u2imtbut2v1tlim/scene.gltf
-            // https://github.com/
-            // https://cdn.jsdelivr.net/gh/dougwperez/scenario-builder@b3d441b331bcfc687062ca009021fadf0f69c3c4
-
-            // b3d441b
-            // // https://raw.githubusercontent.com/dougwperez/scenario-builder/main/city%20(1)/scene.gltf
 
             let noiseTexture = flatNoiseTexture;
 
@@ -393,40 +413,6 @@
         farmTileButton.onPointerUpObservable.add(function () {
           console.log("farm");
           selectSwitch(tiles.farm);
-        });
-
-        let grassLandTileButton = BABYLON.GUI.Button.CreateImageButton(
-          "grassLandTileButton",
-          "Grassland",
-          "https://assets.babylonjs.com/environments/valleygrass.png"
-        );
-        grassLandTileButton.width = "115px";
-        grassLandTileButton.height = "40px";
-        grassLandTileButton.color = "white";
-        grassLandTileButton.cornerRadius = 3;
-        grassLandTileButton.background = "#4c4034";
-        grassLandTileButton.onPointerUpObservable.add(function () {
-          console.log("grassland");
-          //   selector = tiles.desert;
-
-          selectSwitch(tiles.grassLand);
-        });
-
-        let waterTileButton = BABYLON.GUI.Button.CreateImageButton(
-          "waterTileButton",
-          "Water",
-          "https://www.babylonjs-playground.com/textures/waterbump.png"
-        );
-        waterTileButton.width = "115px";
-        waterTileButton.height = "40px";
-        waterTileButton.color = "white";
-        waterTileButton.cornerRadius = 3;
-        waterTileButton.background = "#4c4034";
-        waterTileButton.onPointerUpObservable.add(function () {
-          console.log("water");
-          //   selector = tiles.desert;
-
-          selectSwitch(tiles.water);
         });
 
         let cityButton = BABYLON.GUI.Button.CreateImageButton(
