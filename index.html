@@ -21,6 +21,12 @@
     <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
     <script src="babylon.js"></script>
     <script src="babylon.glTFFileLoader.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
 
     <style></style>
     <link rel="stylesheet" type="text/css" href="./styles.css" />
@@ -34,7 +40,12 @@
       <button class="menuBtn">🟦 NATO</button>
       <button class="menuBtn">🟥 USSR</button>
       <button class="menuBtn">⚙️ Options</button>
-      <button class="menuBtn" id="hideShowBuilder">⬇️ Hide Menu</button>
+      <button class="menuBtn" id="hideShowBuilder">⬇️ HIDE</button>
+    </div>
+    <div class="controller" id="controllerMenuButtons">
+      <button class="controllerButton">🔄 Rotate</button>
+      <button class="controllerButton" id="delete">❌ Delete</button>
+      <button class="controllerButton" id="reset">🗺️ Reset Map</button>
     </div>
     <div class="stickyFooter" id="builderMenu">
       <div id="terrainItems">
@@ -238,23 +249,27 @@
             document.getElementById("hideShowBuilder").innerHTML;
           console.log("HideShowButtonText", HideShowButtonText);
           if (buildMenuHeight === "1px") {
-            document.getElementById("hideShowBuilder").innerHTML =
-              "⬇️ Hide Menu ";
+            document.getElementById("hideShowBuilder").innerHTML = "⬇️ HIDE";
             document
               .getElementById("builderMenuButtons")
               .setAttribute("style", "bottom:210px");
             document
               .getElementById("builderMenu")
               .setAttribute("style", "height:200px");
+            document
+              .getElementById("controllerMenuButtons")
+              .setAttribute("style", "bottom:216px");
           } else {
-            document.getElementById("hideShowBuilder").innerHTML =
-              "⬆️ Show Menu";
+            document.getElementById("hideShowBuilder").innerHTML = "⬆️ SHOW";
             document
               .getElementById("builderMenuButtons")
               .setAttribute("style", "bottom:11px");
             document
               .getElementById("builderMenu")
               .setAttribute("style", "height:1px");
+            document
+              .getElementById("controllerMenuButtons")
+              .setAttribute("style", "bottom:18px");
           }
         };
 
