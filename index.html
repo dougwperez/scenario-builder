@@ -22,25 +22,35 @@
     <script src="babylon.js"></script>
     <script src="babylon.glTFFileLoader.js"></script>
 
-    <style>
-      html,
-      body {
-        overflow: hidden;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-
-      #renderCanvas {
-        width: 100%;
-        height: 100%;
-        touch-action: none;
-      }
-    </style>
+    <style></style>
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
   </head>
   <body>
     <canvas id="renderCanvas"></canvas>
+    <div class="menuButtons" id="builderMenuButtons">
+      <button class="menuBtn">📍 Objectives</button>
+      <button class="menuBtn" id="terrain">🌲 Terrain</button>
+      <button class="menuBtn" id="civilian">🏢 Civilian</button>
+      <button class="menuBtn">🟦 NATO</button>
+      <button class="menuBtn">🟥 USSR</button>
+      <button class="menuBtn">⚙️ Options</button>
+      <button class="menuBtn" id="hideShowBuilder">⬇️ Hide Menu</button>
+    </div>
+    <div class="stickyFooter" id="builderMenu">
+      <div id="terrainItems">
+        <button id="desertButton" class="itemButtons">Desert</button>
+        <button id="grassLandButton" class="itemButtons">GrassLand</button>
+        <button id="waterButton" class="itemButtons">Water</button>
+      </div>
+      <div id="civilianItems">
+        <button id="roadButton" class="itemButtons">Road</button>
+        <button id="streetButton" class="itemButtons">Street</button>
+        <button id="destroyedRoadButton" class="itemButtons">
+          Destroyed Road
+        </button>
+        <button id="rubbleButton" class="itemButtons">Rubble</button>
+      </div>
+    </div>
     <script>
       var canvas = document.getElementById("renderCanvas");
 
@@ -57,6 +67,8 @@
       var createScene = async function () {
         // This creates a basic Babylon Scene object (non-mesh)
         var scene = new BABYLON.Scene(engine);
+        // scene.clearColor = new BABYLON.Color3(0.94, 1.0, 0.98);
+
         var selector;
         var camera = new BABYLON.ArcRotateCamera(
           "camera",
@@ -81,19 +93,18 @@
 
         //2d tiles
         tiles = {
-          rubble:
-            "https://www.textures.com/system/gallery/photos/Concrete/Stone%20Debris/38534/DebrisStone0026_1_download600.jpg",
+          rubble: "./textures/rubble.jpeg",
           farm: "https://www.textures.com/system/gallery/photos/Nature/Farmland%20Aerials/50401/Farmland0008_1_download600.jpg",
-          destroyedRoad:
-            "https://www.textures.com/system/gallery/photos/Roads/Dirt%20Roads/28381/RoadsDirt0004_1_download600.jpg",
-          road: "https://i.pinimg.com/474x/83/9c/04/839c0417d8792b3d2eda93a5ad67ab9b.jpg",
+          destroyedRoad: "./textures/destroyedRoad.jpeg",
+          road: "./textures/road.jpeg",
           // https://i.pinimg.com/564x/68/7b/72/687b726d18ac59e4243a8cd3c0833bba.jpg
-          desert: "https://www.babylonjs-playground.com/textures/ground.jpg",
+          desert: "./textures/ground.jpg",
           grassLand:
             "https://assets.babylonjs.com/environments/valleygrass.png",
           water: "https://www.babylonjs-playground.com/textures/waterbump.png",
           forrest:
             "https://i.pinimg.com/474x/83/9c/04/839c0417d8792b3d2eda93a5ad67ab9b.jpg",
+          street: "./textures/road2.jpeg",
         };
 
         // Default intensity is 1. Let's dim the light a small amount
@@ -107,7 +118,8 @@
         );
 
         //The math and properties for creating the hex grid.
-        let gridSize = 2;
+        //STARTING SIZE FOR GRID -DP
+        let gridSize = 10;
         let hexLength = 1;
         let hexWidthDistance = Math.sqrt(3) * hexLength;
         let hexHeightDistance = 2 * hexLength;
@@ -117,7 +129,20 @@
         let textureUrl;
         let waterMaterialTop;
 
-        const selectSwitch = (tile) => {
+        // const selectSwitch = (tile) => {
+        //   console.log("tile in switch", tile);
+        //   textureUrl = tile;
+        //   selector = tile;
+
+        //   var select = waterMaterialTop;
+
+        //   console.log("fuck", selector);
+        //   waterMaterialTop = new BABYLON.StandardMaterial("largeGroundMat");
+        //   waterMaterialTop.diffuseTexture = new BABYLON.Texture(textureUrl);
+        // };
+        console.log("selectSwitch", selectSwitch);
+
+        function selectSwitch(tile) {
           console.log("tile in switch", tile);
           textureUrl = tile;
           selector = tile;
@@ -127,6 +152,68 @@
           console.log("fuck", selector);
           waterMaterialTop = new BABYLON.StandardMaterial("largeGroundMat");
           waterMaterialTop.diffuseTexture = new BABYLON.Texture(textureUrl);
+        }
+        document.getElementById("desertButton").onclick = function () {
+          selectSwitch(tiles.desert);
+        };
+        document.getElementById("grassLandButton").onclick = function () {
+          selectSwitch(tiles.grassLand);
+        };
+        document.getElementById("waterButton").onclick = function () {
+          selectSwitch(tiles.water);
+        };
+        document.getElementById("roadButton").onclick = function () {
+          selectSwitch(tiles.road);
+        };
+        document.getElementById("streetButton").onclick = function () {
+          selectSwitch(tiles.street);
+        };
+        document.getElementById("destroyedRoadButton").onclick = function () {
+          selectSwitch(tiles.destroyedRoad);
+        };
+        document.getElementById("rubbleButton").onclick = function () {
+          selectSwitch(tiles.rubble);
+        };
+
+        document.getElementById("terrain").onclick = function () {
+          document.getElementById("civilianItems").style.display = "none";
+          document.getElementById("terrainItems").style.display = "block";
+          console.log("click terrain");
+        };
+
+        document.getElementById("civilian").onclick = function () {
+          document.getElementById("civilianItems").style.display = "block";
+          document.getElementById("terrainItems").style.display = "none";
+          console.log("click terrain");
+        };
+
+        document.getElementById("hideShowBuilder").onclick = function () {
+          const buildMenuHeight =
+            document.getElementById("builderMenu").style.height;
+          const buildMenuButtonsHeight =
+            document.getElementById("builderMenuButtons").style.height;
+          let HideShowButtonText =
+            document.getElementById("hideShowBuilder").innerHTML;
+          console.log("HideShowButtonText", HideShowButtonText);
+          if (buildMenuHeight === "1px") {
+            document.getElementById("hideShowBuilder").innerHTML =
+              "⬇️ Hide Menu ";
+            document
+              .getElementById("builderMenuButtons")
+              .setAttribute("style", "bottom:210px");
+            document
+              .getElementById("builderMenu")
+              .setAttribute("style", "height:200px");
+          } else {
+            document.getElementById("hideShowBuilder").innerHTML =
+              "⬆️ Show Menu";
+            document
+              .getElementById("builderMenuButtons")
+              .setAttribute("style", "bottom:11px");
+            document
+              .getElementById("builderMenu")
+              .setAttribute("style", "height:1px");
+          }
         };
 
         createHexGrid(
@@ -139,17 +226,6 @@
           camera,
           scene
         );
-
-        // BABYLON.NodeMaterial.ParseFromSnippetAsync("TD23TV#21", scene).then(nodeMaterial => {
-        //     waterMaterialTop = nodeMaterial;
-        //     waterMaterialTop.name = "waterMaterialTop"
-        //     BABYLON.NodeMaterial.ParseFromSnippetAsync("BS6C1U#1", scene).then(nodeMaterial => {
-        //         waterMaterialBottom = nodeMaterial;
-        //         waterMaterialBottom.name = "waterMaterialBottom";
-
-        //         createHexGrid(gridSize, hexWidthDistance, hexHeightDistance, rowlengthAddition, hexTileImport, waterMaterialTop, camera, scene);
-        //     });
-        // });
 
         //Factor is the width and height of the texure you'd like to create, must be a factor of 2.
         let factor = 512;
@@ -304,51 +380,6 @@
         panel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
         advancedTexture.addControl(panel);
 
-        let roadTileButton = BABYLON.GUI.Button.CreateImageButton(
-          "roadTileButton",
-          "Road",
-          "https://i.pinimg.com/564x/68/7b/72/687b726d18ac59e4243a8cd3c0833bba.jpg"
-        );
-        roadTileButton.width = "115px";
-        roadTileButton.height = "40px";
-        roadTileButton.color = "white";
-        roadTileButton.cornerRadius = 3;
-        roadTileButton.background = "#4c4034";
-        roadTileButton.onPointerUpObservable.add(function () {
-          console.log("road");
-          selectSwitch(tiles.road);
-        });
-
-        let destroyedRoadTileButton = BABYLON.GUI.Button.CreateImageButton(
-          "destroyedRoadTileButton",
-          "Destroyed Road",
-          "https://www.textures.com/system/gallery/photos/Roads/Dirt%20Roads/28381/RoadsDirt0004_1_download600.jpg"
-        );
-        destroyedRoadTileButton.width = "115px";
-        destroyedRoadTileButton.height = "40px";
-        destroyedRoadTileButton.color = "white";
-        destroyedRoadTileButton.cornerRadius = 3;
-        destroyedRoadTileButton.background = "#4c4034";
-        destroyedRoadTileButton.onPointerUpObservable.add(function () {
-          console.log("destroyedroad");
-          selectSwitch(tiles.destroyedRoad);
-        });
-
-        let rubbleTileButton = BABYLON.GUI.Button.CreateImageButton(
-          "rubbleTileButton",
-          "Rubble",
-          "https://i.pinimg.com/564x/68/7b/72/687b726d18ac59e4243a8cd3c0833bba.jpg"
-        );
-        rubbleTileButton.width = "115px";
-        rubbleTileButton.height = "40px";
-        rubbleTileButton.color = "white";
-        rubbleTileButton.cornerRadius = 3;
-        rubbleTileButton.background = "#4c4034";
-        rubbleTileButton.onPointerUpObservable.add(function () {
-          console.log("rubble");
-          selectSwitch(tiles.rubble);
-        });
-
         let farmTileButton = BABYLON.GUI.Button.CreateImageButton(
           "farmTileButton",
           "Farm",
@@ -362,21 +393,6 @@
         farmTileButton.onPointerUpObservable.add(function () {
           console.log("farm");
           selectSwitch(tiles.farm);
-        });
-
-        let desertTileButton = BABYLON.GUI.Button.CreateImageButton(
-          "desertTileButton",
-          "Desert",
-          "https://www.babylonjs-playground.com/textures/ground.jpg"
-        );
-        desertTileButton.width = "115px";
-        desertTileButton.height = "40px";
-        desertTileButton.color = "white";
-        desertTileButton.cornerRadius = 3;
-        desertTileButton.background = "#4c4034";
-        desertTileButton.onPointerUpObservable.add(function () {
-          console.log("desert");
-          selectSwitch(tiles.desert);
         });
 
         let grassLandTileButton = BABYLON.GUI.Button.CreateImageButton(
@@ -459,27 +475,19 @@
             scene
           );
         });
-
-        var slider = new BABYLON.GUI.Slider();
-        slider.minimum = 1;
-        slider.maximum = 10;
-        slider.value = 2;
-        slider.height = "20px";
-        slider.width = "200px";
-        slider.onValueChangedObservable.add(function (value) {
-          gridSize = Math.round(value);
-          guiButton.textBlock.text = "Rebuild Hex Grid: Size " + gridSize;
-        });
-        panel.addControl(slider);
-        panel.addControl(guiButton);
-        panel.addControl(cityButton);
-        panel.addControl(desertTileButton);
-        panel.addControl(grassLandTileButton);
-        panel.addControl(waterTileButton);
-        panel.addControl(roadTileButton);
-        panel.addControl(destroyedRoadTileButton);
-        panel.addControl(farmTileButton);
-        panel.addControl(rubbleTileButton);
+        // SLIDER FROM DEMO
+        // var slider = new BABYLON.GUI.Slider();
+        // slider.minimum = 1;
+        // slider.maximum = 10;
+        // slider.value = 10;
+        // slider.height = "20px";
+        // slider.width = "200px";
+        // slider.onValueChangedObservable.add(function (value) {
+        //   gridSize = Math.round(value);
+        //   guiButton.textBlock.text = "Rebuild Hex Grid: Size " + gridSize;
+        // });
+        // panel.addControl(slider);
+        // panel.addControl(guiButton);
 
         return scene;
       };
