@@ -41,6 +41,7 @@
         <button id="desertButton" class="itemButtons">Desert</button>
         <button id="grassLandButton" class="itemButtons">GrassLand</button>
         <button id="waterButton" class="itemButtons">Water</button>
+        <button id="mountainButton" class="itemButtons">Mountain</button>
       </div>
       <div id="civilianItems">
         <button id="roadButton" class="itemButtons">Road</button>
@@ -51,6 +52,7 @@
         <button id="rubbleButton" class="itemButtons">Rubble</button>
         <button id="farmButton" class="itemButtons">Farm</button>
         <button id="boxButton" class="itemButtons">Box</button>
+        <button id="boomBoxButton" class="itemButtons">Black Fence</button>
       </div>
     </div>
     <script>
@@ -133,6 +135,7 @@
         //Create and load a node material for the top water surface.
         let textureUrl;
         let waterMaterialTop;
+        console.log("Koca: waterMaterialTop ", waterMaterialTop);
 
         // const selectSwitch = (tile) => {
         //   console.log("tile in switch", tile);
@@ -172,6 +175,11 @@
           clearAssetSelector();
           selectSwitch(tiles.water);
         };
+        document.getElementById("mountainButton").onclick = function () {
+          clearAssetSelector();
+
+          assetSelector = "mountains";
+        };
         document.getElementById("roadButton").onclick = function () {
           clearAssetSelector();
           selectSwitch(tiles.road);
@@ -193,8 +201,20 @@
           selectSwitch(tiles.farm);
         };
         document.getElementById("boxButton").onclick = function () {
-          selectSwitch(currentTile);
-          assetSelector = "box";
+          if (currentTile) {
+            selectSwitch(currentTile);
+            assetSelector = "box";
+          } else {
+            assetSelector = "box";
+          }
+        };
+        document.getElementById("boomBoxButton").onclick = function () {
+          if (currentTile) {
+            selectSwitch(currentTile);
+            assetSelector = "boomBox";
+          } else {
+            assetSelector = "boomBox";
+          }
         };
 
         document.getElementById("terrain").onclick = function () {
@@ -314,11 +334,36 @@
                         width: 1,
                         depth: 1,
                       });
+
+                      console.log("Koca: box.position ", box.position);
                       box.position.x =
                         pickResult.pickedMesh.absolutePosition._x;
                       box.position.z =
                         pickResult.pickedMesh.absolutePosition._z;
                       box.position.y = 0.5;
+                    }
+
+                    if (assetSelector === "boomBox") {
+                      console.log("IMPORT GLTF");
+                      var skullMesh;
+                      BABYLON.SceneLoader.ImportMesh(
+                        "",
+                        "https://raw.githubusercontent.com/BabylonJS/MeshesLibrary/master/",
+                        "PBR_Spheres.glb",
+                        scene,
+                        function (newMeshes) {
+                          skullMesh = newMeshes[0];
+                          console.log("Koca: skullMesh ", skullMesh);
+                          skullMesh.position.x =
+                            pickResult.pickedMesh.absolutePosition._x;
+                          skullMesh.position.z =
+                            pickResult.pickedMesh.absolutePosition._z;
+                          skullMesh.position.y = 0.5;
+                        }
+                      );
+                    }
+                    if (assetSelector === "mountains") {
+                      generateMountains();
                     }
 
                     // BABYLON.SceneLoader.ImportMeshAsync(
@@ -333,7 +378,7 @@
               }
             }
 
-            let noiseTexture = flatNoiseTexture;
+            // let noiseTexture = flatNoiseTexture;
 
             //set all meshes in this hex tile to no longer be pickable
             let siblingMeshes = pickResult.pickedMesh.parent.getChildMeshes();
@@ -342,7 +387,8 @@
             }
 
             //randomly determine if this hex tile has an island or not and process the island components
-            if (Math.random() > 0.5) {
+            function generateMountains() {
+              let noiseTexture = flatNoiseTexture;
               let noiseArray = diamondSquare(resolution, multiplier);
 
               let scaledArray = scaleNoise(noiseArray);
@@ -358,9 +404,11 @@
                 BABYLON.Texture.NEAREST_SAMPLINGMODE
               );
               noiseTexture.name = "noiseTexture";
-            }
-            BABYLON.NodeMaterial.ParseFromSnippetAsync("UM4R4N#2", scene).then(
-              (nodeMaterial) => {
+
+              BABYLON.NodeMaterial.ParseFromSnippetAsync(
+                "UM4R4N#2",
+                scene
+              ).then((nodeMaterial) => {
                 nodeMaterial.name =
                   "terrainMaterial" +
                   pickResult.pickedMesh.parent.parent.name.slice(7);
@@ -384,8 +432,8 @@
                 );
                 block.texture.uScale = 0.75;
                 block.texture.vScale = 0.75;
-              }
-            );
+              });
+            }
           }
         };
 
