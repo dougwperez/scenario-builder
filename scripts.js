@@ -282,11 +282,27 @@ var createScene = async function () {
 
               if (assetSelector === "boomBox") {
                 console.log("IMPORT GLTF");
+                // var skullMesh;
+                // BABYLON.SceneLoader.ImportMesh(
+                //   "",
+                //   "https://raw.githubusercontent.com/BabylonJS/MeshesLibrary/master/",
+                //   "PBR_Spheres.glb",
+                //   scene,
+                //   function (newMeshes) {
+                //     skullMesh = newMeshes[0];
+                //     console.log("Koca: skullMesh ", skullMesh);
+                //     skullMesh.position.x =
+                //       pickResult.pickedMesh.absolutePosition._x;
+                //     skullMesh.position.z =
+                //       pickResult.pickedMesh.absolutePosition._z;
+                //     skullMesh.position.y = 0.5;
+                //   }
+                // );
                 var skullMesh;
                 BABYLON.SceneLoader.ImportMesh(
                   "",
-                  "https://raw.githubusercontent.com/BabylonJS/MeshesLibrary/master/",
-                  "PBR_Spheres.glb",
+                  "",
+                  "militaryBase.babylon",
                   scene,
                   function (newMeshes) {
                     skullMesh = newMeshes[0];
