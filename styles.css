@@ -1,3 +1,6 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,700;1,400&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Quantico:wght@700&display=swap");
+
 html,
 body {
   overflow: hidden;
@@ -25,18 +28,19 @@ body {
   padding-top: 7px;
   padding-bottom: 7px;
   padding-left: 15px;
-  font-family: "Quantico", sans-serif;
   border-top-right-radius: 10px;
 }
 .menuBtn {
   width: 120px;
-  background-color: lightcyan;
+  background-color: rgb(253, 255, 224);
   font-weight: 800;
   border-radius: 10px;
+  font-family: "Quantico", sans-serif;
 }
 
 #hideShowBuilder {
   margin-left: 70px;
+  color: red;
 }
 
 .controller {
@@ -61,6 +65,7 @@ body {
   font-weight: 800;
   color: white;
   border-radius: 5px;
+  font-family: "Quantico", sans-serif;
 }
 .stickyFooter {
   position: absolute;
@@ -82,6 +87,9 @@ body {
 .itemButtons {
   background-color: rgb(253, 255, 224);
   font-weight: 800;
+  font-family: "Quantico", sans-serif;
+  margin-bottom: 7px;
+  border-radius: 5px;
 }
 #desertButton {
   width: 5%;

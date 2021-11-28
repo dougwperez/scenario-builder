@@ -148,17 +148,6 @@
         let waterMaterialTop;
         console.log("Koca: waterMaterialTop ", waterMaterialTop);
 
-        // const selectSwitch = (tile) => {
-        //   console.log("tile in switch", tile);
-        //   textureUrl = tile;
-        //   selector = tile;
-
-        //   var select = waterMaterialTop;
-
-        //   console.log("fuck", selector);
-        //   waterMaterialTop = new BABYLON.StandardMaterial("largeGroundMat");
-        //   waterMaterialTop.diffuseTexture = new BABYLON.Texture(textureUrl);
-        // };
         console.log("selectSwitch", selectSwitch);
 
         function selectSwitch(tile) {
@@ -251,6 +240,9 @@
           if (buildMenuHeight === "1px") {
             document.getElementById("hideShowBuilder").innerHTML = "⬇️ HIDE";
             document
+              .getElementById("hideShowBuilder")
+              .setAttribute("style", "color:red");
+            document
               .getElementById("builderMenuButtons")
               .setAttribute("style", "bottom:210px");
             document
@@ -261,6 +253,9 @@
               .setAttribute("style", "bottom:216px");
           } else {
             document.getElementById("hideShowBuilder").innerHTML = "⬆️ SHOW";
+            document
+              .getElementById("hideShowBuilder")
+              .setAttribute("style", "color:blue");
             document
               .getElementById("builderMenuButtons")
               .setAttribute("style", "bottom:11px");
@@ -462,36 +457,6 @@
           BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
         panel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
         advancedTexture.addControl(panel);
-
-        let farmTileButton = BABYLON.GUI.Button.CreateImageButton(
-          "farmTileButton",
-          "Farm",
-          "https://www.textures.com/system/gallery/photos/Nature/Farmland%20Aerials/50401/Farmland0008_1_download600.jpg"
-        );
-        farmTileButton.width = "115px";
-        farmTileButton.height = "40px";
-        farmTileButton.color = "white";
-        farmTileButton.cornerRadius = 3;
-        farmTileButton.background = "#4c4034";
-        farmTileButton.onPointerUpObservable.add(function () {
-          console.log("farm");
-          selectSwitch(tiles.farm);
-        });
-
-        let cityButton = BABYLON.GUI.Button.CreateImageButton(
-          "cityButton",
-          "City",
-          "https://lh3.googleusercontent.com/proxy/7xKGC6ktPOCATo9jfWjKv54w50xrIbzE3c-sNbq7MBj3Bv4pYPgkoECYLf6TcQi9xld9-7D2xp1o-SfFcc5TmZqhxq16IRVepL3Khw-VEUhWV06_vyZVZhbkLprRwCjgVLl8"
-        );
-        cityButton.width = "115px";
-        cityButton.height = "40px";
-        cityButton.color = "white";
-        cityButton.cornerRadius = 3;
-        cityButton.background = "#4c4034";
-        cityButton.onPointerUpObservable.add(function () {
-          console.log("city");
-          //   selectSwitch(tiles.desert);
-        });
 
         let guiButton = BABYLON.GUI.Button.CreateSimpleButton(
           "guiButton",
